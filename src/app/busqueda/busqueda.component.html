@@ -1,0 +1,35 @@
+<form action="">
+    <label 
+        for="txt_nombre_ciudad"
+        class="item-form txt_nombre_ciudad"
+    >
+        Consultar la temperatura de una ciudad
+    </label>
+
+    <div class="container-barra-busqueda">
+        <input 
+            type="text" 
+            id="txt_nombre_ciudad" 
+            class="form-control item-form" 
+            placeholder="Nombre de la ciudad"
+            title="En este campo debe ingresar el nombre de la ciudad que desea buscar"
+            #txtBuscar>
+        
+        <button
+            id="btn_buscar" 
+            class="btn btn-success item-form" 
+            (click)="buscarClima($event)">
+
+            <i class="fas fa-search"></i>
+
+        </button>
+    </div>
+</form>
+
+<button
+    class="btn-delete"
+    (click)="eliminarHistorial()">
+
+    Borrar historial
+
+</button>

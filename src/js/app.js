@@ -1,7 +1,6 @@
 const API_KEY = '84957808f8c887c691e1e63ffc9d4997';
 const txtCiudad = $('#txt_nombre_ciudad');
 const btnBuscar = $('#btn_buscar');
-const containerInformacion = $('.container_informacion');
 
 let ciudad;
 
@@ -16,7 +15,7 @@ const fetchData = () =>{
         .then(res => res.json())
         .then(data => showData(data, ciudad))
         .catch(err => {
-            alert('Ingrese el nombre de una ciudad');
+            alert('No se encontraron datos de la ciudad seleccionada');
         });
 }
 
@@ -25,46 +24,34 @@ const showData = (data, ciudad) =>{
     const datos = {
         name: ciudad,
         temp: data.main.temp,
-        temp_max: data.main.temp_max,
-        temp_min: data.main.temp_min,
         humidity: data.main.humidity,
         pressure: data.main.pressure,
-        sea_level: data.main.sea_level
     }
 
-    $('.txt-nombre').text(datos['name']);
-    $('#temp').text(`${datos['temp']}°C`);
-    $('#temp-min').text(`${datos['temp_min']}°C`);
-    $('#temp-max').text(`${datos['temp_max']}°C`);
-    $('#humidity').text(`${datos['humidity']}%`);
-    $('#pressure').text(`${datos['pressure']}`);
-    $('#sea_level').text(datos['sea_level']==undefined ? 'No se encuentra disponible' : datos['sea_level']);
+    $('.container-main').prepend(
+        `<div class="card">
+            <div class="container-title-city">
+                <i class='${datos['temp'] > 25 ? 'far fa-sun' : "fas fa-cloud-sun"}'></i>
+                <p id="nombreCiudad">
+                    ${datos['name']}
+                </p>
+            </div>
+            <div class="container-data">
+                <p class="data-item" id="dataTemp">
+                    <b>Temperatura: </b>
+                    ${datos['temp']} °C
+                </p>
+                <p class="data-item" id="dataHumedad">
+                    <b>Humedad: </b>
+                    ${datos['humidity']}
+                </p>
+                <p class="data-item" id="dataPresion">
+                    <b>Presión: </b>
+                    ${datos['pressure']} Torr
+                </p>
+            </div>
+        </div>`
+    );
 
-    showTermometro(datos['temp']);
-}
-
-const showTermometro = temp =>{
-    let temperaturaProcentaje = (temp*100)/50;
-    const termometro = $('.container-termometro div');
-    
-    if (temp > 50) {
-        termometro.css({
-            height: '100%'
-        });
-    } else {
-        let colorTermometro;
-
-        if (temp > 0.99 && temp < 15.99) {
-            colorTermometro = '#326bd4';
-        } else if (temp > 15.99 && temp < 35.99) {
-            colorTermometro = '#d4bc32';
-        } else if (temp > 35.99 && temp <= 50.99) {
-            colorTermometro = '#d43232';
-        }
-
-        termometro.css({
-            height: `${temperaturaProcentaje}%`,
-            backgroundColor: colorTermometro
-        });
-    }
+    txtCiudad.val('');
 }

@@ -1,0 +1,24 @@
+<div class="container-main">
+    <div class="card" *ngFor="let item of historial">
+            <div class="container-title-city">
+                <i class="{{item.main.temp > 25 ? 'far fa-sun' : 'fas fa-cloud-sun'}}" aria-hidden="true"></i>
+                <p id="nombreCiudad">
+                    {{item.name}}
+                </p>
+            </div>
+            <div class="container-data">
+                <p class="data-item" id="dataTemp">
+                    <b>Temperatura: </b>
+                    {{item.main.temp}}
+                </p>
+                <p class="data-item" id="dataHumedad">
+                    <b>Humedad: </b>
+                    {{item.main.humidity}} 
+                </p>
+                <p class="data-item" id="dataPresion">
+                    <b>Presión: </b>
+                    {{item.main.pressure}} Torr
+                </p>
+            </div>
+        </div>
+</div>
